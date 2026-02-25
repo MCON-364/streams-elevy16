@@ -3,6 +3,8 @@ package edu.touro.las.mcon364.streams.exercises;
 import java.util.*;
 import java.util.stream.*;
 
+import static sun.tools.jstat.Alignment.keySet;
+
 /**
  * In-Class Exercise: Working with Streams
  * Time: ~40 minutes
@@ -45,7 +47,9 @@ public class StreamExercise {
     public List<String> getAllStudentNames() {
         // TODO: Implement using streams
         // Hint: Use keySet().stream() and sorted()
-        return null;
+        List<String> gradebook.keySet().stream()
+                .sorted()
+                .collect(Collectors.toList());
     }
     
     /**
@@ -55,7 +59,8 @@ public class StreamExercise {
      */
     public long countStudents() {
         // TODO: Implement using streams
-        return 0;
+        return gradebook.keySet().stream()
+                .count();
     }
 
     /**
@@ -79,7 +84,9 @@ public class StreamExercise {
         // 2. Wrap it in Optional.ofNullable(...)
         // 3. Use orElse(...) to return an empty list if null
 
-        return null; // Replace with your implementation
+        Optional.ofNullable(gradebook.get(studentName))
+                .orElse(Collections.emptyList());
+        return gradebook.get(studentName);
     }
     // =========================================================================
     // PART 2: Grade Analysis
@@ -95,7 +102,7 @@ public class StreamExercise {
     public double calculateAverage(String studentName) {
         // TODO: Implement using streams
         // Hint: Use mapToInt() and average()
-        return 0.0;
+
     }
     
     /**
