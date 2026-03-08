@@ -47,9 +47,10 @@ public class StreamExercise {
     public List<String> getAllStudentNames() {
         // TODO: Implement using streams
         // Hint: Use keySet().stream() and sorted()
-        List<String> gradebook.keySet().stream()
+        List<String> studentNames = gradebook.keySet().stream()
                 .sorted()
                 .collect(Collectors.toList());
+        return studentNames;
     }
     
     /**
@@ -84,9 +85,9 @@ public class StreamExercise {
         // 2. Wrap it in Optional.ofNullable(...)
         // 3. Use orElse(...) to return an empty list if null
 
-        Optional.ofNullable(gradebook.get(studentName))
+        var studentGrades = Optional.ofNullable(gradebook.get(studentName))
                 .orElse(Collections.emptyList());
-        return gradebook.get(studentName);
+        return studentGrades;
     }
     // =========================================================================
     // PART 2: Grade Analysis
@@ -102,7 +103,10 @@ public class StreamExercise {
     public double calculateAverage(String studentName) {
         // TODO: Implement using streams
         // Hint: Use mapToInt() and average()
-
+        return getStudentGrades(studentName).stream()
+                .mapToInt(n -> n)
+                .average()
+                .orElse(0.0);
     }
     
     /**
@@ -113,7 +117,10 @@ public class StreamExercise {
     public List<Integer> getAllGradesFlattened() {
         // TODO: Implement using streams
         // Hint: Use flatMap() to flatten the lists
-        return null;
+        return gradebook.values().stream()
+                .flatMap(List::stream)
+                .sorted()
+                .collect(Collectors.toList());
     }
     
     /**
@@ -124,7 +131,11 @@ public class StreamExercise {
     public int findHighestGrade() {
         // TODO: Implement using streams
         // Hint: Flatten first, then find max
-        return 0;
+        int highestGrade = gradebook.values().stream()
+                .flatMap(List::stream)
+                .mapToInt(n -> n)
+                .max().getAsInt();
+        return highestGrade;
     }
     
     /**
@@ -134,7 +145,11 @@ public class StreamExercise {
      */
     public int findLowestGrade() {
         // TODO: Implement using streams
-        return 0;
+        int lowestGrade = gradebook.values().stream()
+                .flatMap(List::stream)
+                .mapToInt(n -> n)
+                .min().getAsInt();
+        return lowestGrade;
     }
     
     /**
@@ -145,7 +160,10 @@ public class StreamExercise {
     public long getTotalGradeCount() {
         // TODO: Implement using streams
         // Hint: You can use flatMap and count, or sum the sizes
-        return 0;
+        long totalGradeCount = gradebook.values().stream()
+                .flatMap(List::stream)
+                .count();
+        return totalGradeCount;
     }
     
     // =========================================================================
