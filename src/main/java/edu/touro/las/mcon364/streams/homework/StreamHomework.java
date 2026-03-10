@@ -2,6 +2,7 @@ package edu.touro.las.mcon364.streams.homework;
 
 import java.time.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Homework: E-Commerce Order Analytics
@@ -181,7 +182,11 @@ public class StreamHomework {
     public double getTotalRevenue() {
         // TODO: Implement using streams
         // Hint: Filter by DELIVERED status, then sum order totals
-        return 0.0;
+        double totalRevenue = customerOrders.stream()
+                .filter(order -> order.status() == OrderStatus.DELIVERED)
+                .mapToDouble(order -> order.getTotal())
+                .sum();
+        return totalRevenue;
     }
     
     /**
@@ -191,7 +196,10 @@ public class StreamHomework {
      */
     public long getOrderCount(OrderStatus status) {
         // TODO: Implement using streams
-        return 0;
+        long orderCount = customerOrders.stream()
+                .filter(order -> order.status() == OrderStatus.DELIVERED)
+                .count();
+        return orderCount;
     }
     
     /**
@@ -202,7 +210,11 @@ public class StreamHomework {
     public Set<Product> getUniqueProducts() {
         // TODO: Implement using streams
         // Hint: Use flatMap to get all OrderItems, then map to Product
-        return null;
+        var uniqueProducts = customerOrders.stream()
+                .flatMap(order -> order.items().stream())
+                .map(customer -> customer.product())
+                .collect(Collectors.toSet());
+        return uniqueProducts;
     }
     
     /**
