@@ -3,8 +3,6 @@ package edu.touro.las.mcon364.streams.exercises;
 import java.util.*;
 import java.util.stream.*;
 
-import static sun.tools.jstat.Alignment.keySet;
-
 /**
  * In-Class Exercise: Working with Streams
  * Time: ~40 minutes
